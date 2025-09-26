@@ -1,0 +1,262 @@
+# ID automático simples (incrementando a cada novo cadastro)
+cliente_id = 1  # o primeiro cadastro começa com 1
+
+# Criando listas para armazenar os dados (simula o banco de dados)
+clientes = []
+contatos = []
+enderecos = []
+
+print("=== CADASTRO DE CLIENTE ===")
+
+# ----- CLIENTE -----
+nome = input("Digite o nome do cliente: ")
+# Gambiarra simples para nome: remover espaços extras no começo/fim
+nome = nome.strip()  
+
+senha = input("Digite a senha do cliente: ")
+# Gambiarra simples de criptografia: inverter a senha (exemplo de iniciante)
+senha_criptografada = senha[::-1]
+
+# ----- CONTATO -----
+telefone = input("Digite o telefone do cliente (ex: (41)99999-9999): ")
+# Gambiarra: tratar telefone "na unha" sem regex
+telefone = telefone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+ddd = telefone[:2]  # os 2 primeiros números
+numero = telefone[2:]  # o resto do número
+
+email = input("Digite o email do cliente: ").strip()  # remove espaços
+
+# ----- ENDEREÇO -----
+rua = input("Digite a rua: ").strip()
+numero_end = input("Digite o número da casa: ").strip()
+cidade = input("Digite a cidade: ").strip()
+cep = input("Digite o CEP (ex: 12345-678): ").replace("-", "").strip()  # remove traço
+
+# ----- ARMAZENANDO DADOS -----
+# Simulando inserção no "banco de dados" usando dicionários
+clientes.append({"id": cliente_id, "nome": nome, "senha": senha_criptografada})
+contatos.append({"cliente_id": cliente_id, "ddd": ddd, "numero": numero, "email": email})
+enderecos.append({"cliente_id": cliente_id, "rua": rua, "numero": numero_end, "cidade": cidade, "cep": cep})
+
+# ----- RESULTADO FINAL -----
+print("\n=== DADOS TRATADOS ===")
+print("Cliente:", clientes)
+print("Contato:", contatos)
+print("Endereço:", enderecos)
+
+# Incrementa ID para o próximo cadastro
+cliente_id += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+# ID automático simples
+produto_id = 1  # começa do 1
+categoria_id = 1  # começa do 1
+
+# Criando listas para armazenar os dados
+produtos = []
+categorias = []
+
+print("=== CADASTRO DE PRODUTO ===")
+
+# ----- CATEGORIA -----
+nome_categoria = input("Digite o nome da categoria do produto: ").strip()
+# Gambiarra: transformar primeira letra em maiúscula (iniciante)
+nome_categoria = nome_categoria.capitalize()
+
+categorias.append({"id": categoria_id, "nome": nome_categoria})
+
+# ----- PRODUTO -----
+nome_produto = input("Digite o nome do produto: ").strip()
+descricao = input("Digite a descrição do produto: ").strip()
+preco = input("Digite o preço do produto (ex: 199.99): ").replace(",", ".").strip()
+# Gambiarra: transformar string em float manualmente
+try:
+    preco = float(preco)
+except:
+    preco = 0.0  # gambiarra iniciante: se der erro, preço 0
+
+# Relação produto -> categoria (um produto tem uma categoria)
+produtos.append({"id": produto_id, "nome": nome_produto, "descricao": descricao, "preco": preco, "categoria_id": categoria_id})
+
+# ----- RESULTADO FINAL -----
+print("\n=== DADOS TRATADOS ===")
+print("Categorias:", categorias)
+print("Produtos:", produtos)
+
+# Incrementa IDs
+produto_id += 1
+categoria_id += 1
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+pedido_id = 1
+item_id = 1
+pagamento_id = 1
+
+# Criando listas para armazenar os dados
+pedidos = []
+itens_pedido = []
+pagamentos = []
+
+print("=== CADASTRO DE PEDIDO ===")
+
+# ----- PEDIDO -----
+cliente_id = input("Digite o ID do cliente que está fazendo o pedido: ").strip()
+data_pedido = input("Digite a data do pedido (ex: 26/09/2025): ").strip()
+# Gambiarra: manter a data como string mesmo, sem validar
+
+pedidos.append({"id": pedido_id, "cliente_id": cliente_id, "data": data_pedido})
+
+# ----- ITENS DO PEDIDO -----
+while True:
+    produto_id = input("Digite o ID do produto que deseja adicionar ao pedido: ").strip()
+    quantidade = input("Digite a quantidade: ").strip()
+    # Gambiarra: transformar quantidade em inteiro na mão
+    try:
+        quantidade = int(quantidade)
+    except:
+        quantidade = 1  # gambiarra iniciante: se der erro, quantidade = 1
+
+    itens_pedido.append({"id": item_id, "pedido_id": pedido_id, "produto_id": produto_id, "quantidade": quantidade})
+
+    item_id += 1
+
+    continuar = input("Deseja adicionar outro item? (s/n): ").strip().lower()
+    if continuar != "s":
+        break
+
+# ----- PAGAMENTO -----
+tipo_pagamento = input("Digite o tipo de pagamento (ex: cartão, boleto, pix): ").strip()
+valor_total = input("Digite o valor total do pedido (ex: 199.99): ").replace(",", ".").strip()
+# Gambiarra: transformar string em float manualmente
+try:
+    valor_total = float(valor_total)
+except:
+    valor_total = 0.0
+
+pagamentos.append({"id": pagamento_id, "pedido_id": pedido_id, "tipo": tipo_pagamento, "valor": valor_total})
+
+# ----- RESULTADO FINAL -----
+print("\n=== DADOS TRATADOS ===")
+print("Pedidos:", pedidos)
+print("Itens do Pedido:", itens_pedido)
+print("Pagamentos:", pagamentos)
+
+# Incrementa IDs
+pedido_id += 1
+pagamento_id += 1
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+fornecedor_id = 1
+estoque_id = 1
+
+# Criando listas para armazenar os dados
+fornecedores = []
+estoques = []
+
+print("=== CADASTRO DE FORNECEDOR ===")
+
+# ----- FORNECEDOR -----
+nome_fornecedor = input("Digite o nome do fornecedor: ").strip()
+# Gambiarra: remover espaços extras no começo/fim
+nome_fornecedor = nome_fornecedor.strip()
+
+telefone = input("Digite o telefone do fornecedor (ex: (41)99999-9999): ")
+# Gambiarra simples: tratar telefone "na unha"
+telefone = telefone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+ddd = telefone[:2]
+numero = telefone[2:]
+
+email = input("Digite o email do fornecedor: ").strip()
+
+fornecedores.append({"id": fornecedor_id, "nome": nome_fornecedor, "ddd": ddd, "numero": numero, "email": email})
+
+# ----- ESTOQUE -----
+while True:
+    produto_id = input("Digite o ID do produto para adicionar ao estoque: ").strip()
+    quantidade = input("Digite a quantidade em estoque: ").strip()
+    # Gambiarra: transformar quantidade em inteiro manualmente
+    try:
+        quantidade = int(quantidade)
+    except:
+        quantidade = 0  # gambiarra iniciante: se der erro, quantidade = 0
+
+    estoques.append({"id": estoque_id, "produto_id": produto_id, "fornecedor_id": fornecedor_id, "quantidade": quantidade})
+
+    estoque_id += 1
+
+    continuar = input("Deseja adicionar outro produto ao estoque? (s/n): ").strip().lower()
+    if continuar != "s":
+        break
+
+# ----- RESULTADO FINAL -----
+print("\n=== DADOS TRATADOS ===")
+print("Fornecedores:", fornecedores)
+print("Estoque:", estoques)
+
+# Incrementa ID para próximo fornecedor
+fornecedor_id += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
